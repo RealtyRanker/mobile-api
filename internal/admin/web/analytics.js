@@ -1,6 +1,6 @@
 import { available, dateLabel, el, empty, number, sourceBadge, sourceName } from "./ui.js";
 
-const colors = { cian: "#4b61a9", yandex: "#a44f32", other: "#697571" };
+const colors = { cian: "#4b61a9", yandex: "#a44f32", domclick: "#297b58", other: "#697571" };
 
 export function renderAnalytics(root, data, days) {
   const cards = el("div", "metric-grid");
@@ -14,7 +14,7 @@ export function renderAnalytics(root, data, days) {
   const stats = el("section", "panel analytics-table");
   stats.append(el("h2", "section-title", "Сравнение площадок"));
   const statsByPlatform = new Map(data.platforms.map((row) => [row.source, row]));
-  const platforms = [...new Set(["cian", "yandex", ...statsByPlatform.keys()])];
+  const platforms = [...new Set(["cian", "yandex", "domclick", ...statsByPlatform.keys()])];
   const rows = platforms.map((platform) => {
     const row = statsByPlatform.get(platform);
     return [

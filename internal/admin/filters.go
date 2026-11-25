@@ -85,7 +85,7 @@ func readFilter(q url.Values) (db.AdminFilter, error) {
 	}
 	f.DealType, f.Source, f.Sort = q.Get("deal_type"), q.Get("source"), q.Get("sort")
 	f.MinRenovation, f.BathroomType = q.Get("renovation"), q.Get("bathroom")
-	if !oneOf(f.DealType, "", "rent", "sale") || !oneOf(f.Source, "", "cian", "yandex", "other") ||
+	if !oneOf(f.DealType, "", "rent", "sale") || !oneOf(f.Source, "", "cian", "yandex", "domclick", "other") ||
 		!oneOf(f.Sort, "", "newest", "oldest", "price_asc", "price_desc", "score_asc", "score_desc") ||
 		!oneOf(f.MinRenovation, "", "cosmetic", "euro", "design") ||
 		!oneOf(f.BathroomType, "", "separated", "combined") {

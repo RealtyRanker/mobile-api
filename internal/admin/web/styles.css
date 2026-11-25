@@ -12,6 +12,7 @@
   --focus: #438768;
   --cian: #4b61a9;
   --yandex: #a44f32;
+  --domclick: #297b58;
   --other: #697571;
 }
 * { box-sizing: border-box; }
@@ -116,6 +117,7 @@ input[type="checkbox"] { accent-color: var(--green); flex: 0 0 15px; width: 15px
 .source-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--other); flex: 0 0 7px; }
 .source-cian .source-dot, .swatch.source-cian { background: var(--cian); }
 .source-yandex .source-dot, .swatch.source-yandex { background: var(--yandex); }
+.source-domclick .source-dot, .swatch.source-domclick { background: var(--domclick); }
 .card-body { padding: 14px; flex: 1; }
 .card-price { font-size: 22px; font-weight: 760; letter-spacing: -.045em; }
 .price-unit { color: var(--muted); font-size: 12px; font-weight: 500; margin-left: 4px; letter-spacing: 0; }

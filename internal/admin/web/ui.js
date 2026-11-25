@@ -10,7 +10,7 @@ export function el(tag, className, text) {
 const numbers = new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 1 });
 const dates = new Intl.DateTimeFormat("ru-RU", { dateStyle: "medium", timeZone: "Europe/Moscow" });
 const times = new Intl.DateTimeFormat("ru-RU", { dateStyle: "medium", timeStyle: "short", timeZone: "Europe/Moscow" });
-const sources = { cian: "Циан", yandex: "Яндекс Недвижимость", other: "Другие" };
+const sources = { cian: "Циан", yandex: "Яндекс Недвижимость", domclick: "Домклик", other: "Другие" };
 
 export const sourceName = (source) => sources[source] ?? sources.other;
 export const number = (value) => numbers.format(value);
