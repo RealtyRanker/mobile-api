@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Realty Ranker</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <a class="brand" href="#/flats?deal_type=rent">
+        <span class="brand-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>Realty Ranker<small>Администрирование</small></span>
+      </a>
+      <nav aria-label="Разделы">
+        <a class="nav-item" id="nav-flats" href="#/flats?deal_type=rent"><span class="nav-icon grid-icon" aria-hidden="true"></span>Квартиры</a>
+        <a class="nav-item" id="nav-analytics" href="#/analytics?days=30"><span class="nav-icon chart-icon" aria-hidden="true"></span>Аналитика</a>
+      </nav>
+    </aside>
+
+    <main id="main">
+      <div class="topbar"><span id="breadcrumb">Каталог</span><span class="catalog-mode"><i></i>Только чтение</span></div>
+      <div class="content">
+        <section id="catalog">
+          <header class="page-heading">
+            <h1>Квартиры</h1>
+            <p>Объявления с площадок, которые отслеживает Realty Ranker.</p>
+          </header>
+          <form id="filters" class="panel filters">
+            <div class="panel-heading"><h2>Фильтры</h2><button type="button" id="reset-filters" class="text-button">Сбросить</button></div>
+            <div class="filter-grid">
+              <label>Тип сделки
+                <select name="deal_type"><option value="rent">Аренда</option><option value="sale">Продажа</option><option value="">Все типы</option></select>
+              </label>
+              <label>Регион<select name="region" class="region-select"></select></label>
+              <fieldset><legend id="price-label">Цена, ₽/мес.</legend><div class="range">
+                <input type="number" name="min_price" min="0" placeholder="От" aria-label="Цена от">
+                <span aria-hidden="true">–</span><input type="number" name="max_price" min="0" placeholder="До" aria-label="Цена до">
+              </div></fieldset>
+              <fieldset><legend>Общая площадь, м²</legend><div class="range">
+                <input type="number" name="min_area" min="0" step="any" placeholder="От" aria-label="Площадь от">
+                <span aria-hidden="true">–</span><input type="number" name="max_area" min="0" step="any" placeholder="До" aria-label="Площадь до">
+              </div></fieldset>
+            </div>
+            <div class="filter-grid secondary-filters">
+              <fieldset class="rooms-field"><legend>Комнатность</legend><div class="pills">
+                <label><input type="checkbox" name="rooms" value="0"><span>Студия</span></label>
+                <label><input type="checkbox" name="rooms" value="1"><span>1</span></label>
+                <label><input type="checkbox" name="rooms" value="2"><span>2</span></label>
+                <label><input type="checkbox" name="rooms" value="3"><span>3</span></label>
+                <label><input type="checkbox" name="rooms" value="4"><span>4</span></label>
+                <label><input type="checkbox" name="rooms" value="5"><span>5</span></label>
+                <label><input type="checkbox" name="rooms_more" value="1"><span>6+</span></label>
+              </div></fieldset>
+              <label>Источник
+                <select name="source"><option value="">Все площадки</option><option value="cian">Циан</option><option value="yandex">Яндекс Недвижимость</option><option value="other">Другие</option></select>
+              </label>
+              <label id="location-mode" hidden>Местоположение в Москве
+                <select name="location_type" id="location-type"><option value="">Любое</option><option value="station">Станции метро</option><option value="line">Линии метро</option><option value="district">Районы</option><option value="okrug">Округа</option></select>
+              </label>
+            </div>
+            <details id="location-picker" class="location-picker" hidden>
+              <summary id="location-label">Выбрать</summary>
+              <label class="search-label">Поиск по списку<input type="search" id="location-search" placeholder="Начните вводить название"></label>
+              <div id="location-items" class="check-grid location-items"></div>
+              <p id="location-empty" class="muted" hidden>Ничего не найдено.</p>
+            </details>
+            <div class="filter-footer">
+              <details id="advanced">
+                <summary>Дополнительные фильтры</summary>
+                <div class="filter-grid extended-grid">
+                  <label>Минимальный скор<input name="min_score" type="number" min="0" placeholder="Любой"></label>
+                  <label>Макс. место метро в рейтинге<input name="min_metro_rank" type="number" min="0" placeholder="Любое"></label>
+                  <label>Мин. площадь кухни, м²<input name="min_kitchen" type="number" min="0" step="any" placeholder="Любая"></label>
+                  <label>Мин. высота потолков, м<input name="min_ceiling" type="number" min="0" step="any" placeholder="Любая"></label>
+                  <fieldset><legend>Этаж</legend><div class="range">
+                    <input type="number" name="min_floor" min="0" placeholder="От" aria-label="Этаж от"><span aria-hidden="true">–</span>
+                    <input type="number" name="max_floor" min="0" placeholder="До" aria-label="Этаж до">
+                  </div></fieldset>
+                  <label>Ремонт не ниже
+                    <select name="renovation"><option value="">Любой</option><option value="cosmetic">Косметический</option><option value="euro">Евроремонт</option><option value="design">Дизайнерский</option></select>
+                  </label>
+                  <label>Санузел
+                    <select name="bathroom"><option value="">Любой</option><option value="separated">Раздельный</option><option value="combined">Совмещённый</option></select>
+                  </label>
+                </div>
+                <div class="check-grid amenity-filters">
+                  <label class="rent-only"><input type="checkbox" name="children" value="1">Можно с детьми</label>
+                  <label class="rent-only"><input type="checkbox" name="pets" value="1">Можно с животными</label>
+                  <label><input type="checkbox" name="dishwasher" value="1">Посудомоечная машина</label>
+                  <label><input type="checkbox" name="conditioner" value="1">Кондиционер</label>
+                  <label><input type="checkbox" name="balcony" value="1">Балкон или лоджия</label>
+                </div>
+              </details>
+              <button type="submit" class="primary apply-button">Показать квартиры <span aria-hidden="true">→</span></button>
+            </div>
+          </form>
+          <div class="list-toolbar">
+            <h2 id="result-title" aria-live="polite">Объявления</h2>
+            <label class="sort-label"><span class="sort-text">Сортировка</span>
+              <select id="sort" aria-label="Сортировка">
+                <option value="newest">Сначала обновлённые</option><option value="oldest">Сначала старые</option>
+                <option value="price_asc">Сначала дешевле</option><option value="price_desc">Сначала дороже</option>
+                <option value="score_desc">Скор по убыванию</option><option value="score_asc">Скор по возрастанию</option>
+              </select>
+            </label>
+          </div>
+          <div id="catalog-status" aria-live="polite"></div>
+          <div id="cards" class="cards"></div>
+          <nav id="pagination" class="pagination" aria-label="Страницы каталога"></nav>
+        </section>
+
+        <section id="detail" hidden>
+          <a id="back-to-catalog" class="back-link" href="#/flats?deal_type=rent">← К списку квартир</a>
+          <div id="detail-body" aria-live="polite"></div>
+        </section>
+
+        <section id="analytics" hidden>
+          <header class="page-heading">
+            <h1>Аналитика</h1>
+            <p>Статистика собранных объявлений и совпадений между площадками.</p>
+          </header>
+          <form id="analytics-filters" class="panel analytics-filters">
+            <label>Тип сделки<select name="deal_type"><option value="rent">Аренда</option><option value="sale">Продажа</option></select></label>
+            <label>Регион<select name="region" class="region-select"></select></label>
+            <label>Период<select name="days"><option value="7">7 дней</option><option value="30">30 дней</option><option value="90">90 дней</option><option value="0">Всё время</option></select></label>
+          </form>
+          <div id="analytics-body" aria-live="polite"></div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <dialog id="photo-dialog" aria-label="Просмотр фотографии"></dialog>
+  <noscript>Для работы админки нужен JavaScript.</noscript>
+</body>
+</html>

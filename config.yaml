@@ -1,0 +1,17 @@
+database:
+  dsn: "file:/data/realtyranker.db?mode=rw"
+
+auth:
+  jwt_secret_file: "/etc/mobile-api/jwt_secret"
+  access_token_ttl_minutes: 60
+  refresh_token_ttl_days: 90
+
+logging:
+  level: "info"
+  file_path: "/var/log/mobile-api/app.log"
+
+server:
+  port: 8090
+
+metrics:
+  port: 9097
